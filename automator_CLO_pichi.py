@@ -5,7 +5,7 @@ import subprocess
 import pyautogui as pg
 
 prescroll = 0
-sizegroup = ["XS", "S", "M", "L", "XL", "XXL"]
+sizegroup = ["S", "M", "L"]
 positions = {
                 "avatar": {
                     "tall": { "x": 678, "y": 268, "scroll": 0 },
@@ -23,12 +23,9 @@ positions = {
                     "right": { "x": 1433, "y": 116 },
                     },
                 "cloth": {
-                    "XS": { "x": 1283, "y": 204 },
-                    "S": { "x": 1283, "y": 227 },
-                    "M": { "x": 1283, "y": 246 },
-                    "L": { "x": 1283, "y": 271 },
-                    "XL": { "x": 1283, "y": 296 },
-                    "XXL": { "x": 1283, "y": 316 },
+                    "S": { "x": 1283, "y": 204 },
+                    "M": { "x": 1283, "y": 227 },
+                    "L": { "x": 1283, "y": 246 },
                     },
                 "scroll": [
                     { "x": 1070, "y": 389},
@@ -145,6 +142,17 @@ def get_size_dataset(csv_path, is_mm):
             l.append(list(map(func, row.items())))
         return l
 
+def get_cloth_size(val, mm):
+    if mm:
+        val = val / 10.0
+
+    if val >= 75.0 and val < 95.0:
+        return sizegroup[0]
+    elif val >= 95.0 and val < 110.0:
+        return sizegroup[1]
+    else:
+        return sizegroup[2]
+
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(description='Process some integers.')
@@ -153,25 +161,20 @@ if __name__ == '__main__':
     parser.add_argument('--name', default='', type=str, help='data name')
     parser.add_argument('--sizedataset', default='sample.csv', type=str, help='size chart (csv)')
     parser.add_argument('--mm', action='store_true', help='mm mode')
-    parser.add_argument('--clothtest', action='store_true', help='mm mode')
     args = parser.parse_args()
     size_dataset = get_size_dataset(args.sizedataset, args.mm)
-    if args.clothtest:
-        name = 'test'
-    else:
-        name = args.name
 
     # GUI Automation
     init()
     for i, size_data in enumerate(size_dataset):
         # Edit Avatar Size
-        if not args.clothtest:
-            open_avatar_size()
-            for key, val in size_data:
-                edit_avatar_size(key, str(val), args.pr)
-            close_avatar_size()
+        open_avatar_size()
+        for key, val in size_data:
+            if key == 'chest':
+                cloth_size = get_cloth_size(val, args.mm)
+            edit_avatar_size(key, str(val), args.pr)
+        close_avatar_size()
         # Edit Cloth Size
-        for cloth_size in sizegroup:
-            choose_cloth_size(cloth_size) # choose
-            simulation() # Draping
-            save_zprj(name+str(i).zfill(3)+'-'+cloth_size, args.dir, args.pr, is_torso=False) #Save File
+        choose_cloth_size(cloth_size) # choose
+        simulation() # Draping
+        save_zprj(str(i).zfill(3), args.dir, args.pr, is_torso=False) #Save File
