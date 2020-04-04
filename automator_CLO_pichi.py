@@ -78,17 +78,17 @@ def close_avatar_size():
     pg.hotkey('esc', pause=1.0)
 
 
-def choose_cloth_size(cloth_size):
+def choose_cloth_size(cloth_size, pr):
     print("Choose "+cloth_size)
     pg.click(
         x=positions["cloth"][cloth_size]["x"],
         y=positions["cloth"][cloth_size]["y"],
-        pause=5.0,
+        pause=5.0*pr,
         clicks=1,
         interval=0,
         button='left'
     )
-    time.sleep(5)
+    time.sleep(5*pr)
 
 
 def simulation():
@@ -100,35 +100,42 @@ def simulation():
     time.sleep(3)
 
 
-def save_zprj(basename, directory, pr, is_torso=False):
-    print("Save file")
+def save_zprj(zprj, basename, directory, pr, is_torso=False):
+    '''
     if is_torso:
         pg.hotkey('shift','a', pause=1.0*pr)
         filepath = basename+'-torso'
     else:
-        filepath = basename
+    '''
+    filepath = basename
     # save
-    pg.hotkey('shift','command','s', pause=4.0*pr)
-    pg.click(
-        x=positions["save"]["x"],
-        y=positions["save"]["y"],
-        pause=5.0*pr,
-        clicks=4,
-        interval=0,
-        button='left'
-    )
-    pg.hotkey('delete', pause=2.0*pr)
-    pg.typewrite(filepath, interval=0.2, pause=2.0*pr)
-    pg.hotkey('enter', pause=2.0*pr)
-    print("File Saved " + filepath)
-
+    print("Save file")
+    pg.hotkey('command', 's', pause=1.0*pr)
+    print("File Saved")
     time.sleep(5*pr)
+    '''
+    # Torso Mode
     if is_torso:
         pg.hotkey('shift', 'a', pause=1.0*pr)
+    '''
     # Remove zprj file
-    command = "rm " + os.path.abspath(directory) + os.sep + filepath +".Zprj"
+    command = "mv "\
+        + os.path.abspath(directory) + os.sep + os.path.splitext(os.path.basename(zprj))[0] +".png "\
+        + os.path.abspath(directory) + os.sep + filepath +".png"
+    # print(command)
     subprocess.run(command, shell=True, check=True)
 
+
+def get_cloth_size(val, is_mm):
+    if is_mm:
+        val = val / 10.0
+
+    if val >= 75.0 and val < 95.0:
+        return sizegroup[0]
+    elif val >= 95.0 and val < 110.0:
+        return sizegroup[1]
+    else:
+        return sizegroup[2]
 
 def get_size_dataset(csv_path, is_mm):
     with open(csv_path) as f:
@@ -141,17 +148,6 @@ def get_size_dataset(csv_path, is_mm):
                 func = lambda x: (x[0], float(x[1]))
             l.append(list(map(func, row.items())))
         return l
-
-def get_cloth_size(val, mm):
-    if mm:
-        val = val / 10.0
-
-    if val >= 75.0 and val < 95.0:
-        return sizegroup[0]
-    elif val >= 95.0 and val < 110.0:
-        return sizegroup[1]
-    else:
-        return sizegroup[2]
 
 if __name__ == '__main__':
     import argparse
@@ -175,6 +171,6 @@ if __name__ == '__main__':
             edit_avatar_size(key, str(val), args.pr)
         close_avatar_size()
         # Edit Cloth Size
-        choose_cloth_size(cloth_size) # choose
+        choose_cloth_size(cloth_size, args.pr) # choose
         simulation() # Draping
-        save_zprj(str(i).zfill(3), args.dir, args.pr, is_torso=False) #Save File
+        save_zprj(args.img_path, str(i).zfill(3), args.dir, args.pr, is_torso=False) #Save File
