@@ -83,8 +83,8 @@ def choose_cloth_size(cloth_size):
     pg.click(
         x=positions["cloth"][cloth_size]["x"],
         y=positions["cloth"][cloth_size]["y"],
-        pause=2.0,
-        clicks=2,
+        pause=5.0,
+        clicks=1,
         interval=0,
         button='left'
     )

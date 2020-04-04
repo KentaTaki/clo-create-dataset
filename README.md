@@ -8,6 +8,7 @@
 1. 右下の3Dというマークをクリックする。
 1. 4~6を行うと下図のような図になる。
 1. command+shift+S して、適当な名前で保存する（保存した先がデータセットが溜まっていく場所 your_dir になる）
+1. スタート前にグレーディングのボタンを何度か押して挙動を確認しておく。
 
 
 ![desktop1](images/desktop1.png)
@@ -19,8 +20,8 @@
 # Python の設定
 ```
 pip install pyautogui==0.9.48
-python automator_CLO.py --dir your_dir --mm --clothtest --sizedataset test.csv #グレーディングの確認
-python automator_CLO.py --dir your_dir --mm --sizedataset test.csv #速度の確認
-python automator_CLO.py --dir your_dir --mm --sizedataset test.csv --pr 1.5 #速度を1.5倍遅くする
+python automator_CLO.py --dir test --mm --sizedataset test.csv --img_path test.Zprj --clothtest
+python automator_CLO.py --dir test --mm --sizedataset test.csv --img_path test.Zprj
+python automator_CLO.py --dir test --mm --sizedataset test.csv --img_path test.Zprj --pr #速度を1.5倍に
 python automator_CLO.py --dir your_dir --mm # 本番
 ```
