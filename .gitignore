@@ -1,4 +1,5 @@
 .DS_Store
 zprj/*
-test/*
-test2/*
+test/*.Zprj
+test2/*.Zprj
+test_pichi/*.Zprj
