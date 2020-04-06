@@ -76,6 +76,7 @@ def edit_avatar_size(key, value, pr):
 def close_avatar_size():
     print("Closed")
     pg.hotkey('esc', pause=1.0)
+    time.sleep(5)
 
 
 def choose_cloth_size(cloth_size, pr):
@@ -112,7 +113,7 @@ def save_zprj(zprj, basename, directory, pr, is_torso=False):
     print("Save file")
     pg.hotkey('command', 's', pause=1.0*pr)
     print("File Saved")
-    time.sleep(5*pr)
+    time.sleep(8*pr)
     '''
     # Torso Mode
     if is_torso:
@@ -126,17 +127,6 @@ def save_zprj(zprj, basename, directory, pr, is_torso=False):
     subprocess.run(command, shell=True, check=True)
 
 
-def get_cloth_size(val, is_mm):
-    if is_mm:
-        val = val / 10.0
-
-    if val >= 75.0 and val < 95.0:
-        return sizegroup[0]
-    elif val >= 95.0 and val < 110.0:
-        return sizegroup[1]
-    else:
-        return sizegroup[2]
-
 def get_size_dataset(csv_path, is_mm):
     with open(csv_path) as f:
         reader = csv.DictReader(f)
@@ -149,13 +139,25 @@ def get_size_dataset(csv_path, is_mm):
             l.append(list(map(func, row.items())))
         return l
 
+
+def get_cloth_size(val, is_mm):
+    if is_mm:
+        val = val / 10.0
+
+    if val >= 75.0 and val < 95.0:
+        return sizegroup[0]
+    elif val >= 95.0 and val < 110.0:
+        return sizegroup[1]
+    else:
+        return sizegroup[2]
+
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('--dir', type=str, help='directory')
     parser.add_argument('--pr', default=1.0, type=float, help='pause rate')
-    parser.add_argument('--name', default='', type=str, help='data name')
     parser.add_argument('--sizedataset', default='sample.csv', type=str, help='size chart (csv)')
+    parser.add_argument('--img_path', default='sample.Zprj', type=str, help='zprj')
     parser.add_argument('--mm', action='store_true', help='mm mode')
     args = parser.parse_args()
     size_dataset = get_size_dataset(args.sizedataset, args.mm)

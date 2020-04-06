@@ -79,6 +79,7 @@ def edit_avatar_size(key, value, pr):
 def close_avatar_size():
     print("Closed")
     pg.hotkey('esc', pause=1.0)
+    time.sleep(5)
 
 
 def choose_cloth_size(cloth_size, pr):

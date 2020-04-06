@@ -4,6 +4,7 @@
 1. CLOの設定 > ユーザ設定 > ショートカット >  3D衣装 >  全パターン再配置に ctrl+Rを登録
 1. CLOの設定 > ユーザ設定 > ショートカット >  アバター > アバターの編集に ctrl+A を登録
 1. CLOのMacのデスクトップ1に画面いっぱいに配置 ( ctrl + 1 でDesktop1に遷移するか確認 )
+1. システム環境設定 -> ディスプレイ -> 解像度 変更 1440x900 にする。
 1. 右上のObject Browser の→を連打してグレーディングを選択する。
 1. 右下の3Dというマークをクリックする。
 1. 4~6を行うと下図のような図になる。
@@ -13,15 +14,23 @@
 
 ![desktop1](images/desktop1.png)
 
-# 補足
-もしも服に線が入っていたら、左上の服のアイコンをクリックして青色に光っているアイコンを下図のようにしてください。
-![desktop-icon](images/desktop-icon.png)
-
 # Python の設定
 ```
 pip install pyautogui==0.9.48
 python automator_CLO.py --dir test --mm --sizedataset test.csv --img_path test.Zprj --clothtest
 python automator_CLO.py --dir test --mm --sizedataset test.csv --img_path test.Zprj
-python automator_CLO.py --dir test --mm --sizedataset test.csv --img_path test.Zprj --pr #速度を1.5倍に
-python automator_CLO.py --dir your_dir --mm # 本番
+python automator_CLO.py --dir your_dir --mm --img_path your_zprj.Zprj  # 本番(普通)
+python automator_CLO_pichi.py --dir your_dir --mm --img_path your_zprj.Zprj  # 本番(ピチ)
 ```
+
+# 補足1
+もしも服に線が入っていたら、左上の服のアイコンをクリックして青色に光っているアイコンを下図のようにしてください。
+![desktop-icon](images/desktop-icon.png)
+
+# 確認方法
+```
+python
+>>> import pyautogui as pg
+>>> pg.position()
+```
+
