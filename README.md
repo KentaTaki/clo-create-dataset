@@ -20,6 +20,7 @@ pip install pyautogui==0.9.48
 python automator_CLO.py --dir test --mm --sizedataset test.csv --img_path test.Zprj --clothtest
 python automator_CLO.py --dir test --mm --sizedataset test.csv --img_path test.Zprj
 python automator_CLO.py --dir your_dir --mm --img_path your_zprj.Zprj  # 本番(普通)
+python automator_CLO.py --dir your_dir --mm --img_path your_zprj.Zprj --start_idx n  # 本番(n番目から)
 python automator_CLO_pichi.py --dir your_dir --mm --img_path your_zprj.Zprj  # 本番(ピチ)
 ```
 
