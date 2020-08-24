@@ -4,6 +4,8 @@
 1. CLOの設定 > ユーザ設定 > ショートカット >  3D衣装 >  全パターン再配置に ctrl+Rを登録
 1. CLOの設定 > ユーザ設定 > ショートカット >  アバター > アバターの編集に ctrl+A を登録
 1. ctrl+A > ボディサイズの設定方法を「基本」→「Advanced Human」に変更
+1. 作成したい人物サイズの身長を合わせる(160cmのアバターでデータセットを作成したい場合、身長を1600mmに)
+1. sample.csvを任意のサイズ表のcsvファイルに入れ替える(csvファイル置き場：https://drive.google.com/drive/u/0/folders/1r-YBaIC31GNBl9-c2gUocN-H9p6pm8dk)
 1. CLOのMacのデスクトップ1に画面いっぱいに配置 ( ctrl + 1 でDesktop1に遷移するか確認 )
 1. システム環境設定 -> ディスプレイ -> 解像度 変更 1440x900 にする。
 1. 右上のObject Browser の→を連打してグレーディングを選択する。
